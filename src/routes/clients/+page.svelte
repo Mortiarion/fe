@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { clients } from '#lib/data/clients.ts';
 	import { resolve } from '$app/paths';
-	
+
 	import ClientCard from '#lib/components/ClientCard.svelte';
 </script>
 
