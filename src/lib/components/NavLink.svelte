@@ -2,8 +2,10 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import type { RouteId } from '$app/types';
-
-	let { href, label }: { href: RouteId; label: string } = $props();
+	type StaticRouteId = Exclude<RouteId, `${string}[${string}`>;
+	// тут виключаєм з головного роута динамічний роут
+	// nav links only ever point at sections, never at a [param] route
+	let { href, label }: { href: StaticRouteId; label: string } = $props();
 
 	const pathname = $derived(page.url.pathname);
 	const isActive = (target: string) => pathname === target || pathname.startsWith(target + '/');
