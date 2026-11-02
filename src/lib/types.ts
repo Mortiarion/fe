@@ -3,7 +3,8 @@ export type ProjectStatus = 'draft' | 'quoted' | 'printing' | 'done';
 export type Client = {
 	id: number;
 	name: string;
-	email: string;
+	email: string | null;
+	phone: string | null;
 	createdAt: string;
 };
 
