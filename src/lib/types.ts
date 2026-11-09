@@ -10,8 +10,9 @@ export type Client = {
 
 export type Project = {
 	id: number;
-	clientId: number;
-	title: string;
-	status: ProjectStatus;
-	createdAt: string;
+	clientId: number | null;
+	title: string | null;
+	status: string | null;
+	qty: number | null;
+	description: string | null;
 };

@@ -9,7 +9,8 @@
 	<p>{project.clientId}</p>
 	<p>{project.title}</p>
 	<p>{project.status}</p>
-	<p>{project.createdAt}</p>
+	<p>{project.qty}</p>
+	<p>{project.description}</p>
 </div>
 
 <style>
