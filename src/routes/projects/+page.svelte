@@ -9,7 +9,7 @@
 
 <h1>Проекти</h1>
 
-{#each data.projects as project (project.id)}
+{#each data.projectsAll as project (project.id)}
 	<a href={resolve('/projects/[id]', { id: String(project.id) })}>
 		<ProjectCard {project} />
 	</a>
