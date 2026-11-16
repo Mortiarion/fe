@@ -1,5 +1,7 @@
 export type ProjectStatus = 'draft' | 'quoted' | 'printing' | 'done';
 
+export const projectStatuses: ProjectStatus[] = ['draft', 'quoted', 'printing', 'done'];
+
 export type Client = {
 	id: number;
 	name: string;

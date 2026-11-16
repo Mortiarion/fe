@@ -3,6 +3,7 @@
 	import type { PageServerData } from './$types.js';
 
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
+	import { projectStatuses } from '#lib/types.js';
 
 	let { data }: { data: PageServerData } = $props();
 
@@ -40,10 +41,12 @@
 		<textarea name="description"></textarea>
 	</label>
 
-	<label for="status">
-		Статус
-		
-	</label>
+	<select name="status">
+		<option value="">-вибрати статус-</option>
+		{#each projectStatuses as status (status)}
+			<option value={status}>{status}</option>
+		{/each}
+	</select>
 
 	<button>Додати проект</button>
 </form>

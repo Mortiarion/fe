@@ -20,12 +20,14 @@ export const actions = {
 		const title = String(data.get('title') ?? '');
 		const qtyRaw = data.get('qty');
 		const descriptionRaw = data.get('description');
+		const statusRaw = data.get('status');
 
 		await db.insert(projects).values({
 			clientId: clientId,
 			title: title,
 			qty: qtyRaw ? Number(qtyRaw) : null,
 			description: descriptionRaw ? String(descriptionRaw) : null,
+			status: statusRaw ? String(statusRaw) : 'draft'
 		});
 
 		redirect(303, '/projects');

@@ -8,7 +8,7 @@
 	<p>{project.id}</p>
 	<p>{clientName}</p>
 	<p>{project.title}</p>
-	<!-- <p>{project.status}</p> -->
+	<p>{project.status}</p>
 	<p>{project.qty}</p>
 	<p>{project.description}</p>
 </div>
