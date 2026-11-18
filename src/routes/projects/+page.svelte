@@ -18,8 +18,12 @@
 	</a>
 {/each}
 
-{#if form?.error}
-	<p role='alert'>{form.error}</p>
+{#if form?.errors}
+	<ul>
+		{#each form.errors as message (message)}
+			<li>{message}</li>
+		{/each}
+	</ul>
 {/if}
 
 <form method='POST' action="?/create">

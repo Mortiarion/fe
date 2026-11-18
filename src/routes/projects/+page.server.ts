@@ -20,19 +20,22 @@ export const actions = {
 		const clientId = Number(data.get('clientId'));
 
 		const client = await db.select().from(clients).where(eq(clients.id, clientId)).get();
+		
+		const errors: string[] = [];
 
-		if(!client) {
-			return fail(400, {
-				error: 'Обери клієнта зі списку',
-				values: {
-					title: String(data.get('title') ?? ''),
-					qty: String(data.get('qty') ?? ''),
-					description: String(data.get('description') ?? '')
-				}
-			})
-		}
+		if(!client) errors.push('Обери клієнта зі списку');
 
 		const title = String(data.get('title') ?? '');
+		
+		if(!title.trim()) errors.push('Назва не може бути порожня');
+
+		if(errors.length > 0) return fail(400, {errors, values: {
+			title: String(data.get('title') ?? ''),
+			qty: String(data.get('qty') ?? ''),
+			description: String(data.get('description') ?? '')
+		}})
+
+
 		const qtyRaw = data.get('qty');
 		const descriptionRaw = data.get('description');
 		const statusRaw = data.get('status');
