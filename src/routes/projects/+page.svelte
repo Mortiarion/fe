@@ -7,26 +7,19 @@
 
 	let { data, form }: { data: PageServerData; form: ActionData } = $props();
 
-	const clientName = (clientId: number | null) => data.clientsAll.find((c) => c.id === clientId)?.name ?? '-без клієнта-';
+	const clientName = (clientId: number | null) =>
+		data.clientsAll.find((c) => c.id === clientId)?.name ?? '-без клієнта-';
 </script>
 
 <h1>Проекти</h1>
 
 {#each data.projectsAll as project (project.id)}
 	<a href={resolve('/projects/[id]', { id: String(project.id) })}>
-		<ProjectCard {project} clientName={clientName(project.clientId)}/>
+		<ProjectCard {project} clientName={clientName(project.clientId)} />
 	</a>
 {/each}
 
-{#if form?.errors}
-	<ul>
-		{#each form.errors as message (message)}
-			<li>{message}</li>
-		{/each}
-	</ul>
-{/if}
-
-<form method='POST' action="?/create">
+<form method="POST" action="?/create">
 	<select name="clientId" required>
 		<option value="">- обрати клієнта -</option>
 		{#each data.clientsAll as client (client.id)}
@@ -34,19 +27,31 @@
 		{/each}
 	</select>
 
+	{#if form?.errors?.clientId}
+		<p class="error">{form.errors.clientId}</p>
+	{/if}
+
 	<label for="title">
 		Назва
-		<input id='title' type="text" name='title' required value={form?.values?.title ?? ''}/>
+		<input id="title" type="text" name="title" required value={form?.values?.title ?? ''} />
 	</label>
+
+	{#if form?.errors?.title}
+		<p class="error">{form.errors.title}</p>
+	{/if}
 
 	<label for="qty">
 		Кількість
-		<input id='qty' type="number" name='qty' min='1' value={form?.values?.qty ?? ''}>
+		<input id="qty" type="number" name="qty" min="1" value={form?.values?.qty ?? ''} />
 	</label>
+
+	{#if form?.errors?.qty}
+		<p class="error">{form.errors.qty}</p>
+	{/if}
 
 	<label for="description">
 		Опис
-		<textarea id='description' name="description">{form?.values?.description ?? ''}</textarea>
+		<textarea id="description" name="description">{form?.values?.description ?? ''}</textarea>
 	</label>
 
 	<select name="status">

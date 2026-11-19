@@ -17,28 +17,37 @@ export const actions = {
 	create: async ({ request }) => {
 		const data = await request.formData();
 
-		const clientId = Number(data.get('clientId'));
-
-		const client = await db.select().from(clients).where(eq(clients.id, clientId)).get();
-		
-		const errors: string[] = [];
-
-		if(!client) errors.push('Обери клієнта зі списку');
-
+		const clientIdRaw = data.get('clientId');
 		const title = String(data.get('title') ?? '');
-		
-		if(!title.trim()) errors.push('Назва не може бути порожня');
-
-		if(errors.length > 0) return fail(400, {errors, values: {
-			title: String(data.get('title') ?? ''),
-			qty: String(data.get('qty') ?? ''),
-			description: String(data.get('description') ?? '')
-		}})
-
-
-		const qtyRaw = data.get('qty');
+		const qtyRaw = String(data.get('qty') ?? '');
 		const descriptionRaw = data.get('description');
 		const statusRaw = data.get('status');
+
+		const errors: Record<string, string> = {};
+
+		const clientId = Number(data.get('clientId'));
+		const client = await db.select().from(clients).where(eq(clients.id, clientId)).get();
+
+		if (!client) errors.clientId = 'Обери клієнта зі списку';
+
+		if (!title.trim()) errors.title = 'Назва не може бути порожня';
+
+		const qty = Number(qtyRaw);
+
+		if (qtyRaw.trim() !== '' && (Number.isNaN(qty) || qty < 1))
+			errors.qty = 'Кількість має бути числом не менше 1';
+
+		if (Object.keys(errors).length > 0) {
+			return fail(400, {
+				errors,
+				values: {
+					clientId: String(clientIdRaw ?? ''),
+					title,
+					qty: qtyRaw,
+					description: String(descriptionRaw ?? '')
+				}
+			});
+		}
 
 		await db.insert(projects).values({
 			clientId: clientId,
