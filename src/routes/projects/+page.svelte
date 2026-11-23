@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { PageServerData, ActionData } from './$types.js';
+	import { enhance } from '$app/forms';
 
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
 	import { projectStatuses } from '#lib/types.js';
@@ -19,7 +20,7 @@
 	</a>
 {/each}
 
-<form method="POST" action="?/create">
+<form method="POST" action="?/create" use:enhance>
 	<select name="clientId" required>
 		<option value="">- обрати клієнта -</option>
 		{#each data.clientsAll as client (client.id)}
